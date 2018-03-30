@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" th:src="@{/js/jquery3.3.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<title>Sale Cloud</title>
+<style>
+header {
+	width: auto;
+	height: 50px;
+	background-color: #2AC845;
+	padding: 20px 0;
+	font-size: 14;
+}
+ul li {
+	list-style-type: none;
+	float: left;
+	margin-left: 15px;
+	color: white;
+	cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+	<header>
+	<div>
+		<ul class="demo">
+			<li v-for="item in items" :href="item.uri" v-on:click="click">{{item.text}}</li>
+		</ul>
+	</div>
+	</header>
+	<div id="test" style="padding: 20px 20px;"></div>
+	<script type="text/javascript" th:src="@{/js/index.js}"></script>
+</body>
+</html>

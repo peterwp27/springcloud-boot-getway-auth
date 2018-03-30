@@ -1,0 +1,30 @@
+server:
+  port: 8110
+spring:
+  datasource:
+    driver-class-name: ${mysqlserver.driver-class-name}
+    url: ${mysqlserver.url}
+    username: ${mysqlserver.username}
+    password: ${mysqlserver.password}
+  jpa:
+    hibernate:
+      #ddl-auto: create #ddl-auto:设为create表示每次都重新建表
+      ddl-auto: update #ddl-auto:设为update表示每次都不会重新建表
+    show-sql: true
+eureka:
+  instance:
+    metadata-map:
+      user.name: ${security.user.name}
+      user.password: ${security.user.password}
+      
+security:
+  user:
+    name: user
+    password: password
+  oauth2:
+    client:
+      clientId: svcb-service
+      clientSecret: ${security.user.password}
+      accessTokenUri: http://${authserver.hostname}:${authserver.port}${authserver.contextPath}/oauth/token
+      grant-type: client_credentials
+      scope: server

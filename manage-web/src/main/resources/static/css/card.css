@@ -1,0 +1,21 @@
+.listDiv {
+	width: 100%;
+}
+.listDiv ul {
+	float: left;
+	border: 1px solid gray;
+	background-color: #D9EDED;
+	margin-left: 20px;
+	height: 120px;
+	list-style:none;
+	margin-top: 15px;
+}
+.listDiv ul li {
+	width: 200px;
+	margin-left: 0px;
+	margin-top: 50px;
+	font-size: 14px;
+}
+
+.valueClass {
+}

@@ -1,0 +1,20 @@
+{
+	"nrietData": [
+		{
+			"text": "one",
+			"uri": "http://localhost:8060/manage-web/demo/getOne"
+		},
+		{
+			"text": "two",
+			"uri": "http://localhost:8060/manage-web/demo/getTwo"
+		},
+		{
+			"text": "three",
+			"uri": "http://localhost:8060/manage-web/demo/getThree"
+		},
+		{
+			"text": "four",
+			"uri": "http://localhost:8060/manage-web/demo/getFour"
+		}
+	]
+}

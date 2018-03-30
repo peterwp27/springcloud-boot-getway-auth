@@ -1,0 +1,23 @@
+server:
+  port: 10086
+
+security:
+  basic:
+    enabled: false
+logging:
+  config: classpath:logback-spring.xml
+
+spring:
+  thymeleaf:
+    cache: false
+    mode: HTML5
+    encoding: utf-8
+    content-type: text/html
+
+    
+requestUrl:
+  readRadarData: http://58.213.107.90:9013/restAPI/readFile/readRadarData?time={time}&stationId={stationId}
+  getProduct: http://58.213.107.90:9013/restAPI/product/getProduct?time={time}&stationId={stationId}&dataType={dataType}&element={element}&sum={sum}&interval={interval}
+  
+
+    

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <jmxConfigurator/>
+    <logger name="cn.nriet.datacenter.mapper" level="DEBUG">
+    </logger>
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">  
+        <destination>192.168.126.128:9601</destination>  
+        <encoder charset="UTF-8"
+            class="net.logstash.logback.encoder.LogstashEncoder" >
+            <!-- "appname":"front-web" 的作用是指定创建索引的名字时用，并且在生成的文档中会多了这个字段  -->
+             <customFields>{"appname":"front"}</customFields>
+        </encoder>
+    </appender>  
+    
+    <root level="INFO">
+        <appender-ref ref="LOGSTASH" />
+        <appender-ref ref="CONSOLE" />  
+    </root>
+</configuration>

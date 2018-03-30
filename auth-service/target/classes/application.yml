@@ -1,0 +1,24 @@
+server:
+  context-path: /uaa
+  port: 5000
+
+management:
+  security:
+    enabled: false
+  context-path: /mgmt
+
+eureka:
+  instance:
+    health-check-url-path: ${server.context-path}${management.context-path}/health
+    status-page-url-path: ${server.context-path}${management.context-path}/info
+    metadata-map:
+      management.context-path: ${server.context-path}${management.context-path}
+
+spring:
+  datasource:
+    driver-class-name: ${mysqlserver.driver-class-name}
+    url: ${mysqlserver.url}
+    username: ${mysqlserver.username}
+    password: ${mysqlserver.password}
+  jpa:
+    show-sql: true

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+<title>Sale Cloud</title>
+
+<link rel="stylesheet" th:href="${ctx}  + @{/manage-web/css/index.css}" href="css/index.css" type="text/css" />
+
+<style>
+.loginDiv {
+	margin:0 auto; width:320px; overflow:hidden;
+}
+.loginDiv table {
+	width: 100%;
+}
+.loginDiv tr {
+	height: 60px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+	<div id="header">
+        
+        <div class="logo"></div>
+		<div style="margin-bottom: 20px; margin-top: 100px;">
+			<span style="font-size: 24px;">管理后台登录</span>
+		</div>
+		<div style="margin-bottom: 20px;">
+			<span th:text="${message}"></span>
+		</div>
+        <div class="loginDiv">
+			<form th:action="@{/manage-web/login}" th:object="${loginUser}" method="post">
+				<table>
+					<tr>
+						<td>用户名：</td>
+						<td><input type="text" class="input_text1" name="username" th:value="${loginUser?.username}"/></td>
+					</tr>
+					<tr>
+						<td>密码：</td>
+						<td><input type="text" class="input_text1" name="password" th:value="${loginUser?.password}"/></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="submit" value="确定" class="input_button8"/></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+	</div>
+
+</body>
+</html>

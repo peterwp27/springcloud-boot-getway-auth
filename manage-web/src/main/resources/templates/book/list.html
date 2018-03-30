@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+
+<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css" type="text/css" />
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../css/top.css" type="text/css" />
+
+</head>
+
+<body>
+	<div id="main">
+      <div class="" style="margin-top: 30px;">
+      			<a th:href="@{/manage-web/book/addBook}" href="#">添加图书</a>
+      </div>
+
+      <div class="sort_switch">
+          <ul id="TabsNav">
+          	  <li class="selected"><a href="#">图书管理</a></li>
+          </ul>
+      </div>
+      
+      <div class="sort_content">
+          <table class="tableHue1" style="text-align: center;" width="100%" border="1" bordercolor="#a4d5e3" cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <td width="30%"><strong>图书名称</strong></td>
+                  <td width="20%"><strong>作者</strong></td>
+                  <td width="10%"><strong>价格</strong></td>
+                  <td width="40%"><strong>图片</strong></td>
+                </tr>
+              </thead>
+              <tbody id="tbody" style="font-size: 12px;">
+                <tr th:each="data : ${books}" style="height: 55px;">
+                  <td th:text="${data.name}"></td>
+                  <td th:text="${data.author}"></td>
+                  <td th:text="${data.price}"></td>
+                  <td><img th:src="${data.coverUrl}" height="80" src="#"/></td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+</div>
+
+</body>
+
+</html>

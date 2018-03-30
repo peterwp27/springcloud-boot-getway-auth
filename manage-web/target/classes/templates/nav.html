@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+<title></title>
+
+<link rel="stylesheet" th:href="@{/css/style.css}" href="../css/style.css" type="text/css" />
+<link rel="stylesheet" th:href="@{/css/nav.css}" href="../css/top.css" type="text/css" />
+
+<script type="text/javascript">
+ 
+</script>
+
+</head>
+
+<body>
+	<div th:fragment="onload_nav" class="admin_memu">
+		<ul id="nav">
+        	<li>
+				<a href="#" onclick="clickNav(this);return false;" class="parent" id="1"><h5><strong>系统管理</strong></h5></a>
+            	<ul id="opt_1" class="child_area">
+					<li class="last"><a th:href="@{/manage-web/book/list}" href="book/list.html" target="mainFrame"><h6>图书</h6></a></li>
+                </ul>
+            </li>
+        </ul>
+        <script>
+
+	window.onload = function() {
+		
+	};
+
+	function clickNav(a) {
+		var childUl = document.getElementById("opt_" + a.id);
+		if (childUl.style.display == "block" || childUl.style.display == "")	{
+			childUl.style.display = "none";
+		} else {
+			childUl.style.display = "block";
+		}
+	}
+
+</script>
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+server:
+  port: 8120
+spring:
+  thymeleaf:
+    cache: false
+    mode: HTML5
+    encoding: utf-8
+    content-type: text/html
+    
+eureka:
+  instance:
+    metadata-map:
+      user.name: ${security.user.name}
+      user.password: ${security.user.password}
+      
+queryUrl: 
+  loginUrl: http://localhost:8060/manage/validate/{name}/{password}
+  ctx: http://localhost:8060
+  
+security:
+  user:
+    name: anil
+    password: password
+  oauth2:
+    client:
+      clientId: manage-web
+      clientSecret: secret
+      accessTokenUri: http://localhost:8060/uaa/oauth/token
+      grant_type: password
+      scope: read%20write

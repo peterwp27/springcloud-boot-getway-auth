@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration> 
+    <properties resource="mybatis_generator.properties" />
+    <context id="MBG" targetRuntime="MyBatis3" defaultModelType="conditional">
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+         <property name="javaFileEncoding" value="UTF-8"/>
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 不希望生成的注释中包含时间戳 -->
+            <property name="suppressDate" value="true" />
+            <!-- 是否  自动为每一个生成的类创建一个构造方法-->
+            <property name="constructorBased" value="false"/>
+        </commentGenerator>
+        <jdbcConnection 
+            driverClass="${jdbc_driver}" 
+            connectionURL="${jdbc_url}"
+            userId="${jdbc_username}" 
+            password="${jdbc_password}">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <javaModelGenerator targetPackage="${modelPackage}" targetProject="${targetProject}">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="${sqlMapperPackage}" targetProject="${targetSource}" >
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator> 
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${daoMapperPackage}" targetProject="${targetProject}" >
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+       
+        <!-- <table tableName="user" domainObjectName="User" enableCountByExample="true" enableUpdateByExample="true"
+        enableDeleteByExample="true" enableSelectByExample="true"
+        selectByExampleQueryId="true"/> -->
+        <table tableName="PDM_TS_INFO" domainObjectName="PdmTsInfo" />
+    </context>
+</generatorConfiguration>
