@@ -1,0 +1,1 @@
+{'success':true, 'msg':'logon success','action':'logout','pop':0,'userName':'fenghao','location':'http://172.16.1.8/ac_portal/proxy.html?type=logout'}

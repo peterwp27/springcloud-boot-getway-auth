@@ -1,0 +1,47 @@
+#监控级别
+logging:
+  level:
+    org.springframework.cloud.netflix.zuul.filters.post.SendErrorFilter: error
+#服务端口号
+server:
+  port: 8040
+
+#断路器监控端口号变量
+turbine:
+  stream:
+    port: 8041
+#注册中心
+eureka:
+  instance:
+    hostname: nriet-monitor        #本实例的id    
+    prefer-ip-address: true        #是否运行ip访问
+    statusPageUrlPath: /info       #info信息
+    metadata-map:
+      user.name: ${security.user.name}
+      user.password: ${security.user.password}
+  client: 
+    service-url: 
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@nriet-eureka:8761/eureka/    #注册中心地址
+##配置注册中心显示info
+info: 
+  build: 
+    name: 微服务监控
+    version: v1.0  #可以显示在monitor界面版本信息
+spring:
+  rabbitmq:
+    host: rabbitmq
+    username: nriet
+    password: nriet2018
+#追踪监控项配置
+  boot:
+    admin:
+      routes:
+        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        location: http://nriet-monitor:${turbine.stream.port}
+#不允许网页直接访问
+security:
+  user:
+    name: admin
+    password: ${MONITOR_SERVER_PASSWORD:admin}

@@ -1,0 +1,59 @@
+#version: '1'
+#services:
+  rabbitmq:
+    image: rabbitmq:management
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672
+  nriet-eureka: 
+    image: nriet-eureka:1.0
+#    net: "host"
+    ports:
+      - "8761:8761"
+  nriet-config: 
+    image: nriet-config:1.0
+    ports:
+      - "8888:8888"
+    links: 
+      - nriet-eureka
+      - rabbitmq
+  nriet-zipkin:
+    image: nriet-zipkin:1.0
+    ports:
+      - "9411:9411"
+    links: 
+      - nriet-eureka
+      - rabbitmq
+  nriet-monitor:
+    image: nriet-monitor:1.0
+    ports:
+      - "8040:8040"
+      - "8041:8041"
+    links: 
+      - nriet-eureka
+      - rabbitmq
+  nriet-gateway:
+    image: nriet-gateway:1.0
+    ports:
+      - "8060:8060"
+    links:
+      - nriet-eureka
+      - nriet-config
+      - rabbitmq
+  nriet-auth-service:
+    image: nriet-auth-service:1.0
+    ports:
+      - "5000:5000"
+    links: 
+      - nriet-eureka
+      - nriet-config
+      - rabbitmq
+  nriet-datacenter-api:
+    image: nriet-datacenter-api:1.0
+    ports:
+      - "8081:8081"
+    links: 
+      - nriet-eureka
+      - nriet-config
+      - rabbitmq

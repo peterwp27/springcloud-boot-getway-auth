@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nriet.datacenter.mapper.cpzz.WarningProMakerMapper">
+	
+	<resultMap type="com.nriet.datacenter.model.cpzz.PublishedMsgList" id="baseResultMap" autoMapping="true">
+		<result column="msgId" jdbcType="VARCHAR" property="msgId" />
+    	<result column="publishDate" jdbcType="VARCHAR" property="publishDate" />
+    	<result column="publisher" jdbcType="VARCHAR" property="publisher" />
+    	<result column="warnType" jdbcType="VARCHAR" property="warnType" />
+    	<result column="publishContent" jdbcType="VARCHAR" property="reportContent" />
+	</resultMap>
+
+	<select id="queryPublishedMsgList" parameterType="hashmap" resultMap="baseResultMap">
+		SELECT
+			ts.PUBLISH_ID as msgId,
+			date_format(ts.PUBLISH_TIME, '%Y-%m-%d %H:%i:%s') as publishDate,
+			case ts.REPORT_TYPE
+				when 1 then '雷暴机场警报'
+				when 2 then '雷暴机场更正报'
+				when 3 then '雷暴机场取消报'
+			else '' end as warnType
+		FROM
+			pdm_ts_info ts
+		WHERE
+			ts.PUBLISH_TIME <![CDATA[<=]]> #{time} AND
+			ts.PUBLISH_TIME <![CDATA[>]]> DATE_ADD(#{time}, INTERVAL -24 HOUR) 
+			<choose>
+				<when test="msgType != null and msgType.toString() != ''">
+					AND ts.REPORT_TYPE = #{msgType}
+				</when>
+				<otherwise>
+					AND (ts.REPORT_TYPE = 1 or ts.REPORT_TYPE = 2 or ts.REPORT_TYPE = 3)
+				</otherwise>
+			</choose>
+		UNION ALL
+		SELECT
+			vis.PUBLISH_ID as msgId,
+			date_format(vis.PUBLISH_TIME, '%Y-%m-%d %H:%i:%s') as publishDate,
+			case vis.REPORT_TYPE
+				when 1 then '低能见度机场警报'
+				when 2 then '低能见度机场更正报'
+				when 3 then '低能见度机场取消报'
+			else '' end as warnType
+		FROM
+			pdm_vis_info vis
+		WHERE
+			vis.PUBLISH_TIME <![CDATA[<=]]> #{time} AND
+			vis.PUBLISH_TIME <![CDATA[>]]> DATE_ADD(#{time}, INTERVAL -24 HOUR) 
+			<choose>
+				<when test="msgType != null and msgType.toString() != ''">
+					AND vis.REPORT_TYPE = #{msgType}
+				</when>
+				<otherwise>
+					AND (vis.REPORT_TYPE = 1 or vis.REPORT_TYPE = 2 or vis.REPORT_TYPE = 3)
+				</otherwise>
+			</choose>
+		UNION ALL
+		SELECT
+			wind.PUBLISH_ID as msgId,
+			date_format(wind.PUBLISH_TIME, '%Y-%m-%d %H:%i:%s') as publishDate,
+			case wind.REPORT_TYPE 
+				WHEN 1 THEN '大风机场警报'
+				WHEN 2 THEN '大风机场更正报'
+				WHEN 3 THEN '大风机场取消报'
+			ELSE '' END as warnType
+		FROM
+			pdm_wind_info wind
+		WHERE
+			wind.PUBLISH_TIME <![CDATA[<=]]> #{time} AND
+			wind.PUBLISH_TIME <![CDATA[>]]> DATE_ADD(#{time}, INTERVAL -24 HOUR) 
+			<choose>
+				<when test="msgType != null and msgType.toString() != ''">
+					AND wind.REPORT_TYPE = #{msgType}
+				</when>
+				<otherwise>
+					AND (wind.REPORT_TYPE = 1 or wind.REPORT_TYPE = 2 or wind.REPORT_TYPE = 3)
+				</otherwise>
+			</choose>
+		UNION ALL
+		SELECT
+			ws.PUBLISH_ID as msgId,
+			date_format(ws.PUBLISH_TIME, '%Y-%m-%d %H:%i:%s') as publishDate,
+			case ws.REPORT_TYPE
+				when 1 then '风切变机场警报'
+				when 2 then '风切变机场更正报'
+				when 3 then '风切变机场取消报' 
+			else '' end as warnType
+		FROM
+			pdm_ws_info ws
+		WHERE
+			ws.PUBLISH_TIME <![CDATA[<=]]> #{time} AND
+			ws.PUBLISH_TIME <![CDATA[>]]> DATE_ADD(#{time}, INTERVAL -24 HOUR) 
+			<choose>
+				<when test="msgType != null and msgType.toString() != ''">
+					AND ws.REPORT_TYPE = #{msgType}
+				</when>
+				<otherwise>
+					AND (ws.REPORT_TYPE = 1 or ws.REPORT_TYPE = 2 or ws.REPORT_TYPE = 3)
+				</otherwise>
+			</choose>
+	</select>
+	
+	<select id="queryOneReport" parameterType="hashmap" resultMap="baseResultMap">
+		SELECT
+			t.PUBLISH_ID as msgId,
+			date_format(t.PUBLISH_TIME, '%Y-%m-%d %H:%i') as publishDate,
+			t.PUBLISHER as publisher,
+			t.PUBLISH_CONTENT as publishContent
+		FROM
+			${table} t
+		WHERE
+			t.PUBLISH_ID = #{msgId} AND
+			t.PUBLISH_TIME = #{time} AND
+			t.REPORT_TYPE = #{msgType}
+	</select>
+	
+	<select id="queryMaxPublishId" parameterType="hashmap" resultType="string">
+		SELECT
+			Max(ts.PUBLISH_ID)
+		FROM
+			pdm_ts_info ts
+		WHERE
+			DATE_FORMAT(ts.PUBLISH_TIME, '%Y%m%d') = DATE_FORMAT(#{time}, '%Y%m%d') 
+		UNION ALL
+		SELECT
+			MAX(vis.PUBLISH_ID)
+		FROM
+			pdm_vis_info vis
+		WHERE
+			DATE_FORMAT(vis.PUBLISH_TIME, '%Y%m%d') = DATE_FORMAT(#{time}, '%Y%m%d')
+		UNION ALL
+		SELECT
+			MAX(wind.PUBLISH_ID)
+		FROM
+			pdm_wind_info wind
+		WHERE
+			DATE_FORMAT(wind.PUBLISH_TIME, '%Y%m%d') = DATE_FORMAT(#{time}, '%Y%m%d')
+		UNION ALL
+		SELECT
+			MAX(ws.PUBLISH_ID)
+		FROM
+			pdm_ws_info ws
+		WHERE
+			DATE_FORMAT(ws.PUBLISH_TIME, '%Y%m%d') = DATE_FORMAT(#{time}, '%Y%m%d')
+	</select>
+</mapper>

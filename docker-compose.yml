@@ -1,35 +1,61 @@
-version: '2'
-services:
+#version: '1'
+#services:
   rabbitmq:
-      image: rabbitmq:3-management
-      restart: always
-      ports:
-        - 15673:15672
-  registry:
-    image: spring-boot-cloud/registry
+    image: rabbitmq:management
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672
+  nriet-eureka: 
+    image: nriet-eureka:1.0
+#    net: "host"
     ports:
       - "8761:8761"
-  config:
-    image: spring-boot-cloud/config
+  nriet-config: 
+    image: nriet-config:1.0
     ports:
       - "8888:8888"
-  monitor:
-    image: spring-boot-cloud/monitor
-    ports:
-      - "8040:8040"
-  zipkin:
-    image: spring-boot-cloud/zipkin
+    links: 
+      - nriet-eureka
+      - rabbitmq
+  nriet-zipkin:
+    image: nriet-zipkin:1.0
     ports:
       - "9411:9411"
-  gateway:
-    image: spring-boot-cloud/gateway
+    links: 
+      - nriet-eureka
+      - rabbitmq
+  nriet-monitor:
+    image: nriet-monitor:1.0
+    ports:
+      - "8040:8040"
+      - "8041:8041"
+    links: 
+      - nriet-eureka
+      - rabbitmq
+  nriet-gateway:
+    image: nriet-gateway:1.0
     ports:
       - "8060:8060"
-  auth-service:
-    image: spring-boot-cloud/auth-service
+    links:
+      - nriet-eureka
+      - nriet-config
+      - rabbitmq
+  nriet-auth-service:
+    image: nriet-auth-service:1.0
     ports:
       - "5000:5000"
-  svca-service:
-    image: spring-boot-cloud/svca-service
-  svcb-service:
-    image: spring-boot-cloud/svcb-service
+    links: 
+      - nriet-eureka
+      - nriet-config
+      - rabbitmq
+  nriet-datacenter-api:
+    image: nriet-datacenter-api:1.0
+    ports:
+      - "8081:8081"
+    volumes:
+      - /export/nriet-data:/home/nriet
+    links: 
+      - nriet-eureka
+      - nriet-config
+      - rabbitmq

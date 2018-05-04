@@ -4,40 +4,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.liandi</groupId>
-    <artifactId>spring-boot-cloud</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.nriet</groupId>
+    <artifactId>nriet-cloud</artifactId>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
+        <version>1.5.4.RELEASE</version>
         <relativePath/>
     </parent>
 
     <modules>
-        <module>config</module>
-        <module>registry</module>
-        <module>gateway</module>
-        <module>monitor</module>
-        <module>auth-service</module>
-        <module>svca-service</module>
-        <module>svcb-service</module>
-        <module>zipkin</module>
-        <module>manage-web</module>
+    	<module>nriet-eureka</module>
+        <module>nriet-config</module>
+        <module>nriet-gateway</module>
+        <module>nriet-zipkin</module>
+        <module>nriet-monitor</module>
+        <module>nriet-auth-service</module>
         <module>nriet-commons</module>
-        <module>user-service</module>
-        <module>nriet-data-api</module>
-        <module>front-web</module>
+        <module>nriet-datacenter-api</module>
+        
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <docker.plugin.version>1.0.0</docker.plugin.version>
-        <docker.image.prefix>spring-boot-cloud</docker.image.prefix>
+        <docker.image.prefix>nriet-cloud</docker.image.prefix>
         <spring.cloud.version>Dalston.SR4</spring.cloud.version>
         <spring-boot-admin.version>1.5.4</spring-boot-admin.version>
     </properties>
@@ -105,7 +101,7 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
+           <!--      <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${docker.plugin.version}</version>
@@ -128,7 +124,7 @@
                             </resource>
                         </resources>
                     </configuration>
-                </plugin>
+                </plugin> -->
             </plugins>
         </pluginManagement>
     </build>

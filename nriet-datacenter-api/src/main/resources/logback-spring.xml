@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<!-- include resource="org/springframework/boot/logging/logback/base.xml"/-->
+    <!-- 日志根目录-->
+    <springProperty scope="context" name="LOG_HOME" source="logging.path" defaultValue="/home/logs/api"/>
+    <!-- 日志文件名称-->
+    <property name="LOG_PREFIX" value="nriet-datacenter-api" />
+    
+    <include resource="com/nriet/framework/util/base-logback-spring.xml"/>
+    <jmxConfigurator/>
+</configuration>

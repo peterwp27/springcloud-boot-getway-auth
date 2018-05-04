@@ -1,0 +1,20 @@
+:
+172.16.4.52
+
+root/nriet2018
+:
+/export/nriet  
+jarÄ¿Â¼
+:
+
+docker images ²é¿´¾µÏñ
+
+docker ps -a ²é¿´ÈÝÆ÷
+
+docker stop ÈÝÆ÷ID
+
+docker rm ÈÝÆ÷ID
+
+docker build -t nriet-eureka:1.0 .
+  
+docker-compose up -d

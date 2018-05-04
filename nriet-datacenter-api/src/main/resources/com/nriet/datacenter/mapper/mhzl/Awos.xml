@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nriet.datacenter.mapper.mhzl.AwosMapper">
+	
+	<resultMap type="com.nriet.datacenter.model.mhzl.Awos" id="awostation" >
+    </resultMap>
+
+	<select id="getAWOSInfo" parameterType="java.util.HashMap" resultMap="awostation">
+		<include refid="selectAWOS" />
+		where
+			t.CCCC = #{stationId}  AND
+			t.ODATE || t.OTIME = #{time} 
+	</select>
+	
+	<select id="getAWOSInfo2H" parameterType="java.util.HashMap" resultMap="awostation">
+		<include refid="selectAWOS" />
+		WHERE
+			t.CCCC = #{stationId} AND
+			t.REFTIME <![CDATA[<=]]> TO_DATE(#{time},'yyyymmddhh24mi') AND
+			t.REFTIME <![CDATA[>=]]> TO_DATE(#{time},'yyyymmddhh24mi') - 2/24	
+			order by t.tdz, t.REFTIME
+	</select>
+	
+	<sql id="selectAWOS">
+		SELECT t.CCCC as station_id,
+         t.ODATE || t.OTIME as datetime,
+         t.RNO as rno,
+         t.TDZ as tdz,
+         t.MID as mid,
+         t.END as "end",
+         t.TDZ_RVR_1A as tdz_rvr_1m,
+         t.TDZ_RVR_10A as tdz_rvr_10m,
+         t.TDZ_MOR_1A as tdz_mor_1m,
+         t.TDZ_MOR_10A as tdz_mor_10m,
+         t.TDZ_BL_1A as tdz_bl_1m,
+         t.TDZ_WIND_F2 as tdz_ms_2m,
+         t.TDZ_WIND_D2 as tdz_md_2m,
+         t.TDZ_WIND_F10 as tdz_ms_10m,
+         t.TDZ_WIND_D10 as tdz_md_10m,
+         t.TDZ_MAX_WIND_F as tdz_ms_max,
+         t.TDZ_MAX_WIND_D as tdz_md_max,
+         t.TDZ_QNH as tdz_slp,
+         t.TDZ_QFE as tdz_sp,
+         t.TDZ_TEMP as tdz_t,
+         t.TDZ_HUMID as tdz_rh,
+         t.TDZ_TD as tdz_dpt,
+         t.TDZ_ROADTEMP as tdz_lst,
+         t.TDZ_CLD_HL as tdz_cld_hl,
+         t.TDZ_CLD_HM as tdz_cld_hm,
+         t.TDZ_CLD_HH as tdz_cld_hh,
+         t.TDZ_VV as tdz_vis,
+         t.TDZ_WHETERPHNO as tdz_wp,
+         t.TDZ_PI as tdz_raini,
+         t.TDZ_P as tdz_rain,
+         t.TDZ_RESERVE1 as tdz_reserve1,
+         t.TDZ_RESERVE2 as tdz_reserve2,
+         t.TDZ_RESERVE3 as tdz_reserve3,
+         t.MID_RVR_1A as mid_rvr_1m,
+         t.MID_RVR_10A as mid_rvr_10m,
+         t.MID_MOR_1A as mid_mor_1m,
+         t.MID_MOR_10A as mid_mor_10m,
+         t.MID_BL_1A as mid_bl_1m,
+         t.MID_WIND_F2 as mid_ms_2m,
+         t.MID_WIND_D2 as mid_md_2m,
+         t.MID_WIND_F10 as mid_ms_10m,
+         t.MID_WIND_D10 as mid_md_10m,
+         t.MID_MAX_WIND_F as mid_ms_max,
+         t.MID_MAX_WIND_D as mid_md_max,
+         t.MID_QNH as mid_slp,
+         t.MID_QFE as mid_sp,
+         t.MID_TEMP as mid_t,
+         t.MID_HUMID as mid_rh,
+         t.MID_TD as mid_dpt,
+         t.MID_ROADTEMP as mid_lst,
+         t.MID_CLD_HL as mid_cld_hl,
+         t.MID_CLD_HM as mid_cld_hm,
+         t.MID_CLD_HH as mid_cld_hh,
+         t.MID_VV as mid_vis,
+         t.MID_WHETERPHNO as mid_wp,
+         t.MID_PI as mid_raini,
+         t.MID_P as mid_rain,
+         t.MID_RESERVE1 as mid_reserve1,
+         t.MID_RESERVE2 as mid_reserve2,
+         t.MID_RESERVE3 as mid_reserve3,
+         t.END_RVR_1A as end_rvr_1m,
+         t.END_RVR_10A as end_rvr_10m,
+         t.END_MOR_1A as end_mor_1m,
+         t.END_MOR_10A as end_mor_10m,
+         t.END_BL_1A as end_bl_1m,
+         t.END_WIND_F2 as end_ms_2m,
+         t.END_WIND_D2 as end_md_2m,
+         t.END_WIND_F10 as end_ms_10m,
+         t.END_WIND_D10 as end_md_10m,
+         t.END_MAX_WIND_F as end_ms_max,
+         t.END_MAX_WIND_D as end_md_max,
+         t.END_QNH as end_slp,
+         t.END_QFE as end_sp,
+         t.END_TEMP as end_t,
+         t.END_HUMID as end_rh,
+         t.END_TD as end_dpt,
+         t.END_ROADTEMP as end_lst,
+         t.END_CLD_HL as end_cld_hl,
+         t.END_CLD_HM as end_cld_hm,
+         t.END_CLD_HH as end_cld_hh,
+         t.END_VV as end_vis,
+         t.END_WHETERPHNO as end_wp,
+         t.END_PI as end_raini,
+         t.END_P as end_rain,
+         t.END_RESERVE1 as end_reserve1,
+         t.END_RESERVE2 as end_reserve2,
+         t.END_RESERVE3 as end_reserve3
+        FROM ELE01_AWOS t
+
+	</sql>
+</mapper>

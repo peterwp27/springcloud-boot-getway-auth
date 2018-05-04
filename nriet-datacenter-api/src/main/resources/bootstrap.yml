@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: nriet-datacenter-api
+#  cloud:
+#    config:
+#      uri: http://172.16.4.52:8888
+#      profile: dev
+#      fail-fast: true
+#      username: user
+#      password: ${CONFIG_SERVER_PASSWORD:password}
+#      retry:
+#        initial-interval: 2000
+#        max-interval: 10000
+#        multiplier: 2
+#        max-attempts: 10

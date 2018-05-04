@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: nriet-config   #clientID 注册中心对每个服务的唯一编号

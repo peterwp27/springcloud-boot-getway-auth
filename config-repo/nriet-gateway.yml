@@ -1,0 +1,48 @@
+server:
+  port: 8060   #服务端口号
+#允许注册中心推送config
+management:
+  security:
+    enabled: false
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000           #断路时间
+#负载均衡有限选择负载少的服务，同时有超时加权
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+#服务注册中心
+eureka: 
+  instance: 
+    hostname: nriet-gateway
+    prefer-ip-address: true
+    statusPageUrlPath: /info       #info信息
+  client: 
+    service-url: 
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@nriet-eureka:8761/eureka/  #服务注册地址
+#配置注册中心显示info
+info: 
+  build: 
+    name: 网关服务
+    version: v1.0   #可以显示在monitor界面版本信息
+#网关转发规则
+zuul: 
+  ignoredServices: '*'         #忽略所有没有配置在列表中的服务
+  routes:
+    nriet-auth-service:        #需要转发的clientID
+      path: /uaa/**            #转发匹配的路径
+      stripPrefix: false       #转发时是否去掉前缀
+      sensitiveHeaders:        #转发头部信息
+    nriet-web: 
+      path: /analyse/**
+    nriet-datacenter-api: 
+      path: /api/**
+    manage-web: 
+      path: /manage-web/**
+    manage-service: 
+      path: /manage/**

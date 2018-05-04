@@ -1,0 +1,33 @@
+server:
+  context-path: /uaa  #服务根路径
+  port: 5000         #服务端口号
+
+management:
+  security:
+    enabled: false   #设置false后 配置中心可以推送变更
+  context-path: /mgmt #认证管理信息地址
+
+eureka:
+  instance:
+    health-check-url-path: ${server.context-path}${management.context-path}/health  #健康信息
+    status-page-url-path: ${server.context-path}${management.context-path}/info  #服务信息
+    metadata-map:
+      management.context-path: ${server.context-path}${management.context-path}  #获取管理信息的地址
+#注册中心地址
+  client: 
+    service-url: 
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@nriet-eureka:8761/eureka/
+#配置注册中心显示info
+info: 
+  build: 
+    name: Oath2认证服务
+    version: v1.0    #可以显示在monitor界面版本信息
+#spring-数据源配置
+spring: 
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.4.52:13306/oauth?characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+  jpa:
+    show-sql: true   #显示通过jpa执行的sql语句

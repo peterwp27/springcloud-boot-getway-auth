@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nriet.datacenter.mapper.cpzz.PdmVisInfoMapper">
+  <resultMap id="BaseResultMap" type="com.nriet.datacenter.model.cpzz.PdmVisInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="INSERT_TIME" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ISDELETED" jdbcType="INTEGER" property="isdeleted" />
+    <result column="VIS" jdbcType="DECIMAL" property="vis" />
+    <result column="RVR" jdbcType="DECIMAL" property="rvr" />
+    <result column="HCB" jdbcType="DECIMAL" property="hcb" />
+    <result column="FORE_TIME_START" jdbcType="TIMESTAMP" property="foreTimeStart" />
+    <result column="FORE_TIME_END" jdbcType="TIMESTAMP" property="foreTimeEnd" />
+    <result column="FORE_VIS" jdbcType="DECIMAL" property="foreVis" />
+    <result column="FORE_VIS_TREND" jdbcType="INTEGER" property="foreVisTrend" />
+    <result column="FORE_RVR" jdbcType="DECIMAL" property="foreRvr" />
+    <result column="FORE_RVR_TREND" jdbcType="INTEGER" property="foreRvrTrend" />
+    <result column="FORE_HCB" jdbcType="DECIMAL" property="foreHcb" />
+    <result column="FORE_HCB_TREND" jdbcType="INTEGER" property="foreHcbTrend" />
+    <result column="FORE_TIME_START2" jdbcType="TIMESTAMP" property="foreTimeStart2" />
+    <result column="FORE_TIME_END2" jdbcType="TIMESTAMP" property="foreTimeEnd2" />
+    <result column="FORE_VIS2" jdbcType="DECIMAL" property="foreVis2" />
+    <result column="FORE_VIS_TREND2" jdbcType="INTEGER" property="foreVisTrend2" />
+    <result column="FORE_RVR2" jdbcType="DECIMAL" property="foreRvr2" />
+    <result column="FORE_RVR_TREND2" jdbcType="INTEGER" property="foreRvrTrend2" />
+    <result column="FORE_HCB2" jdbcType="DECIMAL" property="foreHcb2" />
+    <result column="FORE_HCB_TREND2" jdbcType="INTEGER" property="foreHcbTrend2" />
+    <result column="REPORT_TYPE" jdbcType="INTEGER" property="reportType" />
+    <result column="PUBLISH_ID" jdbcType="VARCHAR" property="publishId" />
+    <result column="PUBLISH_TIME" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="PUBLISHER" jdbcType="VARCHAR" property="publisher" />
+    <result column="PUBLISH_CONTENT" jdbcType="LONGVARCHAR" property="publishContent" />
+    <result column="CANCEL_TIME" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="CANCEL_NO" jdbcType="VARCHAR" property="cancelNo" />
+    <result column="CANCEL_NOW_VIS" jdbcType="DECIMAL" property="cancel_now_vis" />
+    <result column="CANCEL_FORETIME" jdbcType="TIMESTAMP" property="cancel_foreTime" />
+  </resultMap>
+  
+  <select id="queryVisReport" resultMap="BaseResultMap">
+  	SELECT
+  		t.*
+  	FROM
+  		pdm_vis_info t
+  	WHERE
+  		t.REPORT_TYPE = #{reportType} AND
+  		t.PUBLISH_ID = #{msgId} AND
+  		t.PUBLISH_TIME = str_to_date(#{time}, '%Y%m%d%H%i%s')
+  </select>
+  
+  <insert id="saveReport" parameterType="com.nriet.datacenter.model.cpzz.PdmVisInfo">
+  	INSERT INTO
+  		pdm_vis_info
+  		(
+  			ID, INSERT_TIME, UPDATE_TIME, ISDELETED, VIS, RVR, HCB, FORE_TIME_START, FORE_TIME_END,
+  			FORE_VIS, FORE_VIS_TREND, FORE_RVR, FORE_RVR_TREND, FORE_HCB, FORE_HCB_TREND, REPORT_TYPE,
+  			PUBLISH_ID, PUBLISH_TIME, PUBLISHER, PUBLISH_CONTENT, CANCEL_TIME, CANCEL_NO, FORE_TIME_START2,
+  			FORE_TIME_END2, FORE_VIS2, FORE_VIS_TREND2, FORE_RVR2, FORE_RVR_TREND2, FORE_HCB2, FORE_HCB_TREND2,
+  			CANCEL_NOW_VIS, CANCEL_FORETIME
+  		)
+  		VALUES
+  		(
+  			#{vis.id}, #{vis.insertTime}, #{vis.updateTime}, #{vis.isdeleted}, #{vis.vis}, #{vis.rvr}, #{vis.hcb},
+  			#{vis.foreTimeStart}, #{vis.foreTimeEnd}, #{vis.foreVis}, #{vis.foreVisTrend}, #{vis.foreRvr}, #{vis.foreRvrTrend},
+  			#{vis.foreHcb}, #{vis.foreHcbTrend}, #{vis.reportType}, #{vis.publishId}, #{vis.publishTime}, #{vis.publisher},
+  			#{vis.publishContent}, #{vis.cancelTime}, #{vis.cancelNo}, #{vis.foreTimeStart2}, #{vis.foreTimeEnd2},
+  			#{vis.foreVis2}, #{vis.foreVisTrend2}, #{vis.foreRvr2}, #{vis.foreRvrTrend2}, #{vis.foreHcb2}, #{vis.foreHcbTrend2},
+  			#{vis.cancel_now_vis}, #{vis.cancel_foreTime}
+  		)
+  </insert>
+  
+</mapper>

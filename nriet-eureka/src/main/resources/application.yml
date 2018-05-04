@@ -1,0 +1,17 @@
+server:
+  port: 8761  #服务端口号
+
+eureka:
+  instance:
+    hostname: nriet-eureka #本实例的hostname
+    prefer-ip-address: true #是否支持ip地址访问
+  client:
+    registerWithEureka: false #是否注册到Eureka，自己就不注册自己了
+    fetchRegistry: false #是否主动获取注册列表
+    service-url:
+      defaultZone: http://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/ #注册中心的地址
+#服务security用户认证
+security:  
+  user:
+    name: user 
+    password: ${REGISTRY_SERVER_PASSWORD:password}

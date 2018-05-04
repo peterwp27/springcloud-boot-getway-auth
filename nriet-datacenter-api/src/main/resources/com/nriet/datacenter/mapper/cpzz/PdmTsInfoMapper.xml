@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nriet.datacenter.mapper.cpzz.PdmTsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.nriet.datacenter.model.cpzz.PdmTsInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="INSERT_TIME" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ISDELETED" jdbcType="INTEGER" property="isdeleted" />
+    <result column="DIR" jdbcType="VARCHAR" property="dir" />
+    <result column="DIST" jdbcType="DECIMAL" property="dist" />
+    <result column="HCT" jdbcType="DECIMAL" property="hct" />
+    <result column="SPEED" jdbcType="DECIMAL" property="speed" />
+    <result column="M_DIR" jdbcType="VARCHAR" property="mDir" />
+    <result column="INTENSITY" jdbcType="VARCHAR" property="intensity" />
+    <result column="FORE_TIME_START" jdbcType="TIMESTAMP" property="foreTimeStart" />
+    <result column="FORE_TIME_END" jdbcType="TIMESTAMP" property="foreTimeEnd" />
+    <result column="FOLLOW_WEATHER" jdbcType="VARCHAR" property="followWeather" />
+    <result column="FOLLOW_TIME_START" jdbcType="TIMESTAMP" property="followTimeStart" />
+    <result column="FOLLOW_TIME_END" jdbcType="TIMESTAMP" property="followTimeEnd" />
+    <result column="FOLLOW_WD" jdbcType="DECIMAL" property="followWd" />
+    <result column="FOLLOW_WS" jdbcType="DECIMAL" property="followWs" />
+    <result column="FOLLOW_QUST_WS" jdbcType="DECIMAL" property="followQustWs" />
+    <result column="FOLLOW_VIS" jdbcType="DECIMAL" property="followVis" />
+    <result column="FOLLOW_WINDSHARE" jdbcType="VARCHAR" property="followWindshare" />
+    <result column="REPORT_TYPE" jdbcType="INTEGER" property="reportType" />
+    <result column="PUBLISH_ID" jdbcType="VARCHAR" property="publishId" />
+    <result column="PUBLISH_TIME" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="PUBLISHER" jdbcType="VARCHAR" property="publisher" />
+    <result column="PUBLISH_CONTENT" jdbcType="LONGVARCHAR" property="publishContent" />
+    <result column="CANCEL_TIME" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="CANCEL_NO" jdbcType="VARCHAR" property="cancelNo" />
+  </resultMap>
+  
+  <select id="queryReport" resultMap="BaseResultMap">
+  	SELECT
+  		t.*
+  	FROM
+  		pdm_ts_info t
+  	WHERE
+  		t.REPORT_TYPE = #{reportType} AND
+  		t.PUBLISH_ID = #{msgId} AND
+  		t.PUBLISH_TIME = str_to_date(#{time}, '%Y%m%d%H%i%s') 
+  </select>
+  
+  <insert id="saveReport" parameterType="com.nriet.datacenter.model.cpzz.PdmTsInfo">
+  	INSERT INTO
+  		pdm_ts_info 
+  		(
+  		ID, INSERT_TIME, UPDATE_TIME, ISDELETED, DIR, DIST, HCT, SPEED, M_DIR, INTENSITY,
+  		FORE_TIME_START, FORE_TIME_END, FOLLOW_WEATHER, FOLLOW_TIME_START, FOLLOW_TIME_END,
+  		FOLLOW_WD, FOLLOW_WS, FOLLOW_QUST_WS, FOLLOW_VIS, FOLLOW_WINDSHARE, REPORT_TYPE,
+  		PUBLISH_ID, PUBLISH_TIME, PUBLISHER, PUBLISH_CONTENT, CANCEL_TIME, CANCEL_NO
+  		)
+  		VALUES
+  		(
+  		#{report.id}, #{report.insertTime}, #{report.updateTime}, #{report.isdeleted}, #{report.dir}, #{report.dist},
+  		#{report.hct}, #{report.speed}, #{report.mDir}, #{report.intensity}, #{report.foreTimeStart}, #{report.foreTimeEnd},
+  		#{report.followWeather}, #{report.followTimeStart}, #{report.followTimeEnd}, #{report.followWd}, #{report.followWs},
+  		#{report.followQustWs}, #{report.followVis}, #{report.followWindshare}, #{report.reportType}, #{report.publishId},
+  		#{report.publishTime}, #{report.publisher}, #{report.publishContent}, #{report.cancelTime}, #{report.cancelNo}
+  		)
+  </insert>
+  
+</mapper>

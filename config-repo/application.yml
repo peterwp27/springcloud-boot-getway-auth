@@ -1,40 +1,58 @@
-eureka:
-  instance:
-    hostname: registry
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@registry:8761/eureka/
+server: 
+  port: 8888   #服务端口号
 
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 10000
-
-ribbon:
+hystrix: 
+  command: 
+    default: 
+      execution: 
+        isolation: 
+          thread: 
+            timeoutInMilliseconds: 10000   #断路时间
+#负载均衡有限选择负载少的服务，同时有超时加权
+ribbon: 
   ReadTimeout: 5000
   ConnectTimeout: 5000
-
-spring:
-  rabbitmq:
+spring: 
+  cloud: 
+    config: 
+      server: 
+        git: 
+          uri: http://172.16.4.51:3000/nriet/nriet-cloud      #git地址
+          search-paths: config-repo                      #配置中心所在的目录
+#rabbitmq连接配置
+  rabbitmq: 
     host: rabbitmq
-  sleuth:
-    sampler:
-      percentage: 1
-    integration:
-      enabled: false
-    scheduled:
-      skip-pattern: "^org.*HystrixStreamTask$"
-
-authserver:
-    hostname: auth-service
+    username: nriet
+    password: nriet2018
+  sleuth: 
+    sampler: 
+      percentage: 1    #sleuth服务追踪时日志采样率，一般开发调试时选择1，上线后可以设置为0
+    integration: 
+      enabled: false    #是否创建所有的spingbean追踪
+    scheduled: 
+      skip-pattern: "^org.*HystrixStreamTask$"  #链路追踪时加入熔断情况的追踪
+#auto鉴权访问地址
+authserver: 
+    hostname: nriet-auth-service
     port: 5000
     contextPath: /uaa
-
-security:
-  oauth2:
-    resource:
-      user-info-uri: http://${authserver.hostname}:${authserver.port}${authserver.contextPath}/current
+management: 
+  security: 
+     enabled: false
+#security拦截 不允许直接访问
+security: 
+  user: 
+    name: user
+    password: ${CONFIG_SERVER_PASSWORD:password}
+#服务注册
+eureka: 
+#本实例信息
+  instance: 
+    prefer-ip-address: true
+    metadata-map: 
+      user.name: user
+      user.password: ${CONFIG_SERVER_PASSWORD:password}
+#注册中心地址
+  client: 
+    service-url: 
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@nriet-eureka:8761/eureka/

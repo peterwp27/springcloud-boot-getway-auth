@@ -1,0 +1,65 @@
+server: 
+  port: 8888  #服务端口号
+#熔断器断路时间
+hystrix: 
+  command: 
+    default: 
+      execution: 
+        isolation: 
+          thread: 
+            timeoutInMilliseconds: 10000
+#负载均衡有限选择负载少的服务，同时有超时加权
+ribbon: 
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+spring: 
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://172.16.4.52:10080/nriet/config-repo     #git地址
+          #search-paths: config-repo                      #配置中心所在的目录
+#rabbitmq
+  rabbitmq: 
+    host: rabbitmq
+    username: nriet
+    password: nriet2018
+  sleuth: 
+    sampler: 
+      percentage: 1    #sleuth服务追踪时日志采样率，一般开发调试时选择1，上线后可以设置为0
+    integration: 
+      enabled: false    #是否创建所有的spingbean追踪
+    scheduled: 
+      skip-pattern: "^org.*HystrixStreamTask$"  #链路追踪时加入熔断情况的追踪
+#auth2服务地址
+authserver: 
+    hostname: nriet-auth-service
+    port: 5000
+    contextPath: /uaa
+#允许配置中心被读取
+management: 
+  security: 
+     enabled: false
+#security拦截 不允许直接访问
+security: 
+  user: 
+    name: user
+    password: ${CONFIG_SERVER_PASSWORD:password}
+#服务注册
+eureka: 
+#本实例信息
+  instance: 
+    prefer-ip-address: true
+    metadata-map: 
+      user.name: user
+      user.password: ${CONFIG_SERVER_PASSWORD:password}
+    statusPageUrlPath: /info       #info信息
+#注册中心地址
+  client: 
+    service-url: 
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@nriet-eureka:8761/eureka/
+#配置注册中心显示info
+info: 
+  build: 
+    name: 配置中心
+    version: v1.0

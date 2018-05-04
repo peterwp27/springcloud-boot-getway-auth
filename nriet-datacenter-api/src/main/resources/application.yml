@@ -1,0 +1,58 @@
+server:
+  port: 8081   #服务端口号
+  
+eureka: 
+  instance: 
+    hostname: nriet-datacenter-api
+    instance-id: nriet-datacenter-api     #本实例ID
+    prefer-ip-address: true     #支持ip访问
+    statusPageUrlPath: /info       #info信息
+#    ip-address: 172.16.4.51   #ip地址
+  client: 
+    service-url: 
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@172.16.4.52:8761/eureka/
+#配置注册中心显示info
+info: 
+  build: 
+    name: api接口服务
+    version: v1.0   #可以显示在monitor界面版本信息
+#spring-datasource配置
+spring:
+  datasource:
+    mysql: 
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://172.16.4.52:13306/nriet-kmqx?characterEncoding=utf8&useSSL=false
+      username: root
+      password: 123456
+#    jpa:
+#      show-sql: true
+#      hibernate: 
+#        naming: 
+#          physical-strategy: com.nriet.datacenter.config.MySQLUpperCaseStrategy    #忽略mysql对数据表大小写的转化 
+product: 
+  root: D://home/nriet
+  confpath: ${product.root}/conf
+  legend: 
+    rootpath: ${product.root}/COLORMAPS/
+productpath: ${product.root}/product_fz/
+mybatis:
+  mapper-locations: classpath:mapper/*/*.xml
+#feign熔断器开关
+feign:
+   hystrix:
+     enabled: true
+#oauth认证配置项
+security:
+  user:
+    name: user
+    password: password
+  oauth2:
+    resource: 
+      userInfoUri: http://172.16.4.52:8060/uaa/current
+    client:
+      clientId: client
+      clientSecret: secret
+      accessTokenUri: http://172.16.4.52:8060/uaa/oauth/token
+      grant_type: password
+      scope: read%20write
+      clientAuthenticationScheme: header

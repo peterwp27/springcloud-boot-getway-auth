@@ -18,21 +18,18 @@
 
 # 应用架构
 
-该项目包含 8 个服务
+该项目包含服务：
 
-* registry - 服务注册与发现
-* config - 外部配置
-* monitor - 监控
-* zipkin - 分布式跟踪
-* gateway - 代理所有微服务的接口网关
-* auth-service - OAuth2 认证服务
-* svca-service - 业务服务A
-* svcb-service - 业务服务B
+* nriet-registry - 服务注册与发现
+* nriet-config - 外部配置
+* nriet-zipkin - 分布式跟踪
+* nriet-monitor - 监控
+* nriet-gateway - 代理所有微服务的接口网关
+* nriet-auth-service - OAuth2 认证服务
+* manage-service - 用户登录服务sample
+* manage-web - 用户登录web端sample
+* nriet-commons - 项目工具、组件包
 
-## 体系架构
-![architecture](/screenshots/architecture.jpg)
-## 应用组件
-![components](/screenshots/components.jpg)
 
 # 启动项目
 
@@ -43,10 +40,12 @@
 * 本地手动启动
     1. 配置 rabbitmq
     2. 修改 hosts 将主机名指向到本地   
-       `127.0.0.1	registry config monitor rabbitmq auth-service`  
+       `127.0.0.1	nriet-registry nriet-config nriet-monitor rabbitmq nriet-auth-service`  
        或者修改各服务配置文件中的相应主机名为本地 ip
-    3. 启动 registry、config、monitor、zipkin
-    4. 启动 gateway、auth-service、svca-service、svcb-service
+    3. 启动 nriet-registry、nriet-config、nriet-zipkin、nriet-monitor
+    4. 启动 nriet-gateway、nriet-auth-service、nriet-datacenter-api、nriet-web、manage-service、manage-web
+    5. 启动入口：nriet-front-web   
+     访问：localhost:10086
 
 # 项目预览
 

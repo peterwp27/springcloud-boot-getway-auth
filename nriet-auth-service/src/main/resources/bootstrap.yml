@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: nriet-auth-service          #实例的ID
+  cloud:
+#读取配置中心
+    config: 
+      uri: http://nriet-config:8888
+      fail-fast: true    #允许fail-fast错误处理机制
+      username: user
+      password: ${CONFIG_SERVER_PASSWORD:password}
+      retry:
+        initial-interval: 2000
+        max-interval: 10000
+        multiplier: 2
+        max-attempts: 10

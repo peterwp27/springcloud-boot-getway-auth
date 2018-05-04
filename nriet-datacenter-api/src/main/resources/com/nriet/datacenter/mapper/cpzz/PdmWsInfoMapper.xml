@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nriet.datacenter.mapper.cpzz.PdmWsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.nriet.datacenter.model.cpzz.PdmWsInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="INSERT_TIME" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ISDELETED" jdbcType="INTEGER" property="isdeleted" />
+    <result column="IMPACTED_WW" jdbcType="VARCHAR" property="impactedWw" />
+    <result column="LOCATION" jdbcType="VARCHAR" property="location" />
+    <result column="INTENSITY" jdbcType="VARCHAR" property="intensity" />
+    <result column="FORE_TIME_START" jdbcType="TIMESTAMP" property="foreTimeStart" />
+    <result column="FORE_TIME_END" jdbcType="TIMESTAMP" property="foreTimeEnd" />
+    <result column="FORE_LOCATION" jdbcType="VARCHAR" property="foreLocation" />
+    <result column="FORE_INTENSITY" jdbcType="VARCHAR" property="foreIntensity" />
+    <result column="REPORT_TYPE" jdbcType="INTEGER" property="reportType" />
+    <result column="PUBLISH_ID" jdbcType="VARCHAR" property="publishId" />
+    <result column="PUBLISH_TIME" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="PUBLISHER" jdbcType="VARCHAR" property="publisher" />
+    <result column="PUBLISH_CONTENT" jdbcType="LONGVARCHAR" property="publishContent" />
+    <result column="CANCEL_TIME" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="CANCEL_NO" jdbcType="VARCHAR" property="cancelNo" />
+  </resultMap>
+  
+  <select id="queryWsReport" resultMap="BaseResultMap">
+  	SELECT
+  		t.*
+  	FROM
+  		pdm_ws_info t
+  	WHERE
+  		t.REPORT_TYPE = #{reportType} AND
+  		t.PUBLISH_ID = #{msgId} AND
+  		t.PUBLISH_TIME = str_to_date(#{time}, '%Y%m%d%H%i%s')
+  </select>
+  
+  <insert id="saveReport" parameterType="com.nriet.datacenter.model.cpzz.PdmWsInfo">
+  	INSERT INTO
+  		pdm_ws_info
+  		(
+  			ID, INSERT_TIME, UPDATE_TIME, ISDELETED, IMPACTED_WW, LOCATION, INTENSITY, FORE_TIME_START,
+  			FORE_TIME_END, FORE_LOCATION, FORE_INTENSITY, REPORT_TYPE, PUBLISH_ID, PUBLISH_TIME, PUBLISHER,
+  			PUBLISH_CONTENT, CANCEL_TIME, CANCEL_NO
+  		)
+  		VALUES
+  		(
+  			#{ws.id}, #{ws.insertTime}, #{ws.updateTime}, #{ws.isdeleted}, #{ws.impactedWw}, #{ws.location},
+  			#{ws.intensity}, #{ws.foreTimeStart}, #{ws.foreTimeEnd}, #{ws.foreLocation}, #{ws.foreIntensity},
+  			#{ws.reportType}, #{ws.publishId}, #{ws.publishTime}, #{ws.publisher}, #{ws.publishContent},
+  			#{ws.cancelTime}, #{ws.cancelNo}
+  		)
+  </insert>
+  
+</mapper>

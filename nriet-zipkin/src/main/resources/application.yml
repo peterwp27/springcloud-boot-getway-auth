@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: nriet-zipkin
+  rabbitmq:
+    host: rabbitmq
+    username: nriet
+    password: nriet2018
+
+server:
+  port: 9411
+#security,不能直接通过浏览器打开
+security:
+  user:
+    name: admin
+    password: ${ZIPKIN_SERVER_PASSWORD:admin}

@@ -1,0 +1,48 @@
+server:
+  port: 9091
+  max-http-header-size: 10000000
+ribbon: 
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+management: 
+  security: 
+    enabled: false
+eureka: 
+  instance: 
+#     hostname: nriet-datacenter-api
+    instance-id: nriet-web
+    prefer-ip-address: true
+    ip-address: 172.16.50.224
+    metadata-map: 
+      user.name: user
+      user.password: ${CONFIG_SERVER_PASSWORD:password}
+  client: 
+    service-url: 
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@172.16.4.52:8761/eureka/
+      
+spring:
+  thymeleaf:
+    prefix: classpath:/static/html/
+    suffix: .html
+    cache: false
+    mode: HTML5
+    encoding: utf-8
+    content-type: text/html
+  cloud: 
+    bus: 
+      trace: 
+        enabled: true
+security:
+  user:
+    name: anil
+    password: password
+  oauth2:
+    resource: 
+      userInfoUri: http://172.16.4.52:8060/uaa/current
+    client:
+      clientId: client
+      clientSecret: secret
+      accessTokenUri: http://172.16.4.52:8060/uaa/oauth/token
+      grant_type: password
+      scope: read%20write
+      clientAuthenticationScheme: header
