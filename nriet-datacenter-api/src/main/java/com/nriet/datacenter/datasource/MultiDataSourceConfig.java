@@ -25,7 +25,8 @@ public class MultiDataSourceConfig {
     @Primary // 定义主数据源
     @ConfigurationProperties(prefix = "spring.datasource.mysql")
     public DataSource mysqlDataSource() {
-        return DataSourceBuilder.create().build();
+//        return DataSourceBuilder.create().build();
+    	return DataSourceBuilder.create().type(com.mchange.v2.c3p0.ComboPooledDataSource.class).build();
     }
 
 //    @Bean(name = "oracleDataSource")

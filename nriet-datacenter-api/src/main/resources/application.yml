@@ -20,10 +20,26 @@ info:
 spring:
   datasource:
     mysql: 
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://172.16.4.52:13306/nriet-kmqx?characterEncoding=utf8&useSSL=false
-      username: root
+#      driver-class-name: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://172.16.4.51:13306/test?characterEncoding=utf8&useSSL=false
+#      username: root
+#      password: 123456
+#c3p0连接池
+      jdbcUrl: jdbc:mysql://172.16.4.51:13306/test?characterEncoding=utf8&useSSL=false&autoReconnect=true
+      user: root
       password: 123456
+      driverClass: com.mysql.jdbc.Driver
+      minPoolSize: 2
+      maxPoolSize: 10
+      initialPoolSize: 3
+#      maxIdleTime: 1800000
+#      acquireIncrement: 3
+#      maxStatements: 1000
+#      idleConnectionTestPeriod: 60
+#      acquireRetryAttempts: 30
+#      acquireRetryDelay: 1000
+#      breakAfterAcquireFailure: false
+#      testConnectionOnCheckout: false
 #    jpa:
 #      show-sql: true
 #      hibernate: 
